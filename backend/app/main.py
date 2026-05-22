@@ -50,3 +50,24 @@ async def root():
 async def health_check():
     """健康检查接口 - 供部署平台检测服务状态"""
     return {"status": "healthy"}
+
+
+@app.get("/debug")
+async def debug_info():
+    """调试接口 - 检查 Supabase 连接状态"""
+    from app.core.supabase import supabase_admin
+    try:
+        result = supabase_admin.table("categories").select("*", count="exact").execute()
+        return {
+            "supabase": "connected",
+            "categories_count": result.count or 0,
+            "supabase_url": settings.SUPABASE_URL[:30] + "..." if settings.SUPABASE_URL else "NOT SET",
+            "has_service_key": bool(settings.SUPABASE_SERVICE_KEY),
+        }
+    except Exception as e:
+        return {
+            "supabase": "error",
+            "error": str(e),
+            "supabase_url": settings.SUPABASE_URL[:30] + "..." if settings.SUPABASE_URL else "NOT SET",
+            "has_service_key": bool(settings.SUPABASE_SERVICE_KEY),
+        }
