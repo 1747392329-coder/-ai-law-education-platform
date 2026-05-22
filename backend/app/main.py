@@ -17,9 +17,12 @@ app = FastAPI(
 )
 
 # ========== CORS 跨域配置 ==========
-# 生产环境通过 FRONTEND_URL 环境变量设置，开发时允许 localhost
-cors_origins = [settings.FRONTEND_URL] if settings.FRONTEND_URL else []
-cors_origins.append("http://localhost:3000")
+cors_origins = [
+    "http://localhost:3000",
+    "https://ai-law-education-platform-8ja5luqk4-black-t-s-projects.vercel.app",
+]
+if settings.FRONTEND_URL:
+    cors_origins.append(settings.FRONTEND_URL)
 
 app.add_middleware(
     CORSMiddleware,
