@@ -72,19 +72,16 @@ export default function VideoDetailPage() {
         返回列表
       </Link>
 
-      {/* 视频播放器占位 */}
-      <div className="relative aspect-video rounded-xl overflow-hidden bg-black mb-6">
-        <div className="absolute inset-0 gradient-ai opacity-60" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur flex items-center justify-center
-                        hover:bg-white/30 transition-all cursor-pointer group">
-            <Play className="w-8 h-8 text-white ml-0.5 group-hover:scale-110 transition-transform" />
-          </div>
-        </div>
-        {/* 视频标题覆盖 */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
-          <h1 className="text-2xl font-bold text-white">{video.title}</h1>
-        </div>
+      {/* 视频播放器 */}
+      <div className="relative rounded-xl overflow-hidden bg-black mb-6">
+        <video
+          controls
+          poster={video.thumbnail_url || undefined}
+          className="w-full aspect-video"
+          src={video.video_url}
+        >
+          你的浏览器不支持视频播放
+        </video>
       </div>
 
       {/* 视频信息 */}

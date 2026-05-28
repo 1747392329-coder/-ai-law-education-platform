@@ -20,13 +20,18 @@ export default function VideoCard({ video }: VideoCardProps) {
            style={{ boxShadow: "var(--shadow-card)" }}>
         {/* 缩略图区域 */}
         <div className="relative aspect-video bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
-          {/* 占位渐变 + 播放按钮 */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center
-                          group-hover:bg-white/30 group-hover:scale-110 transition-all duration-200">
-              <Play className="w-5 h-5 text-white ml-0.5" />
+          {/* 真实缩略图或渐变占位 */}
+          {video.thumbnail_url ? (
+            <img src={video.thumbnail_url} alt={video.title}
+              className="absolute inset-0 w-full h-full object-cover" />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center
+                            group-hover:bg-white/30 group-hover:scale-110 transition-all duration-200">
+                <Play className="w-5 h-5 text-white ml-0.5" />
+              </div>
             </div>
-          </div>
+          )}
 
           {/* 时长标签 */}
           {video.duration > 0 && (
